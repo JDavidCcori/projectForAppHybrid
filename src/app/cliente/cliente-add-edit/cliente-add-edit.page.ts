@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-cliente-add-edit',
@@ -9,10 +11,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 
 export class ClienteAddEditPage implements OnInit {
-
   clienteForm!: FormGroup;
   hasErrors = false;
   errorsMessage!: string[];
+  fechaSeleccionada: any;
+
   validationMessages = {
     nombre: [
       { type: 'required', message: 'Nombre es obligatório' },
@@ -20,23 +23,17 @@ export class ClienteAddEditPage implements OnInit {
       { type: 'maxlength', message: 'Nombre debe tener a lo más 50 caracteres' }
     ],
     email: [
-      { type: 'required', message: 'Email es obligatório' },
-      { type: 'email', message: 'Email incorrecto'},
+      { type: 'required', message: 'Email es requerido' },
+      { type: 'email', message: 'Email no es valido' }
     ],
-    telefono: [
-      { type: 'required', message: 'El telefono es obliglatorio' },
-      { type: 'min', message: 'El ingreso debe ser positivo' },
-      { type: 'maxlength', message: 'Telefono debe tener a lo más 9 digitos' },
-    ],
+
     ingreso: [
       { type: 'min', message: 'El ingreso debe ser positivo' }
-    ],
-    nacimiento: [
-      { type: 'required', messege: 'El nacimiento es obligatorio'}
     ]
   };
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private datePicker: DatePicker,
+    private platform: Platform,) { }
 
   ngOnInit() {
     this.clienteForm = this.formBuilder.group({
@@ -53,20 +50,14 @@ export class ClienteAddEditPage implements OnInit {
           Validators.email
         ])],
       telefono: [
-        '', 
-        Validators.compose([
-          Validators.required!, 
-          Validators.maxLength(9)
-        ])],
+        '', Validators.required!],
       ingreso: [
         '0',
         Validators.compose([
           Validators.required!,
           Validators.min(0)
         ])],
-      nacimiento: [
-        '',
-        Validators.required!],
+      nacimiento: [{ value: '', disabled: !this.isBrowserPlatform }, Validators.required]
     });
   }
   nombre!: string;
@@ -99,5 +90,35 @@ export class ClienteAddEditPage implements OnInit {
     //     this.errorsMessage.push('Email é obrigatório');
     //   }
     //   this.hasErrors = this.errorsMessage.length > 0;
+  }
+
+  confirmarFecha() {
+    return new Date(this.clienteForm.get('nacimiento')?.value).toLocaleDateString();
+  }
+
+  selecionarFecha() {
+    this.platform.ready().then(() => {
+      if (this.platform.is('capacitor')) {
+        this.datePicker.show({
+          date: new Date(),
+          mode: 'date',
+          locale: 'es-PE',
+          doneButtonLabel: 'Confirmar',
+          cancelButtonLabel: 'Cancelar'
+        })
+          .then(
+            fecha => this.clienteForm.controls['nacimiento'].setValue(fecha.toLocaleDateString())
+          );
+      } else {
+        // instruções para execução no navegador
+      }
+    });
+  }
+
+  get isBrowserPlatform(): boolean {
+    if (this.platform.is('capacitor')) {
+      return false;
+    }
+    return true;
   }
 }
