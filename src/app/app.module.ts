@@ -15,8 +15,11 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { enableIndexedDbPersistence, getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { environment } from './credentials';
 
+import { DatePicker } from '@ionic-native/date-picker/ngx';
+
 @NgModule({
   declarations: [AppComponent],
+<<<<<<< HEAD
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
@@ -29,6 +32,10 @@ import { environment } from './credentials';
     DatePicker, 
     FormBuilder,
   ],
+=======
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, DatePicker],
+>>>>>>> b768c2df46866649b8b0571aa8a7552ce477a82a
   bootstrap: [AppComponent],
 })
 export class AppModule { }

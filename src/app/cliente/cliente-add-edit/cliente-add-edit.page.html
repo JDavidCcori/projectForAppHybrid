@@ -17,21 +17,27 @@
           {{ validation.message }}
         </div>
       </ng-container>
+<<<<<<< HEAD
       <!-- <ng-container *ngFor="let validation of validationMessages.telefono">
         <div *ngIf="clienteForm.get('telefono')?.hasError(validation.type)">
           {{ validation.message }}
         </div>
       </ng-container> -->
+=======
+>>>>>>> b768c2df46866649b8b0571aa8a7552ce477a82a
       <ng-container *ngFor="let validation of validationMessages.ingreso">
         <div *ngIf="clienteForm.get('ingreso')?.hasError(validation.type)">
           {{ validation.message }}
         </div>
       </ng-container>
+<<<<<<< HEAD
       <!-- <ng-container *ngFor="let validation of validationMessages.nacimiento">
         <div *ngIf="clienteForm.get('nacimiento')?.hasError(validation.type)">
           {{ validation.message }}
         </div>
       </ng-container> -->
+=======
+>>>>>>> b768c2df46866649b8b0571aa8a7552ce477a82a
     </div>
     <!-- <ion-list *ngIf="hasErrors">
       <ion-label *ngFor="let errorMessage of errorsMessage">
@@ -42,8 +48,12 @@
       <ion-label position="floating">
         Nombre
       </ion-label>
+<<<<<<< HEAD
       <ion-input [(ngModel)]="cliente.nombre" type="text" formControlName="nombre"
         [class.invalid]="!clienteForm.controls['nombre'].valid && clienteForm.controls['nombre'].touched">
+=======
+      <ion-input type="text" formControlName="nombre">
+>>>>>>> b768c2df46866649b8b0571aa8a7552ce477a82a
       </ion-input>
       <!-- <small class="error-message" *ngIf="clienteForm.get('nombre')!.errors?.['required'] ||
         clienteForm.get('nombre')!.errors?.['minlength'] ||
@@ -79,6 +89,7 @@
         clienteForm.get('ingreso')!.errors?.['min']">
         Ingrese su ingreso
       </small> -->
+<<<<<<< HEAD
     </ion-item>
     <ion-item lines="none">
       <ion-label position="floating">
@@ -88,7 +99,55 @@
       <!-- <small class="error-message" *ngIf="clienteForm.get('nacimiento')!.errors?.['required']">
         Ingrese una fecha de nacimiento
       </small> -->
+=======
+>>>>>>> b768c2df46866649b8b0571aa8a7552ce477a82a
     </ion-item>
+    <div *ngIf="isBrowserPlatform; else showNative">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="9">
+            <ion-item lines="none">
+              <ion-label position="floating">Nacimiento</ion-label>
+              <ion-input [value]="fechaSeleccionada" [readonly]="true"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col class="ion-no-padding">
+            <ion-item lines="none">
+              <ion-button fill="clear" id="open-date-input" class="ion-no-margin;ion-no-padding">
+                <ion-icon icon="calendar"></ion-icon>
+              </ion-button>
+              <ion-popover trigger="open-date-input" show-backdrop="false" [dismissOnSelect]="true">
+                <ng-template>
+                  <ion-datetime minuteValues="0,15,30,45" dayValues="5,10,15,20,25,30"></ion-datetime>
+                </ng-template>
+              </ion-popover>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+    <ng-template #showNative>
+      <div (click)="selecionarFecha()">
+        <ion-grid class="ion-no-padding">
+          <ion-row>
+            <ion-col size="9">
+              <ion-item lines="none">
+                <ion-label position="stacked">Nacimiento</ion-label>
+                <ion-input formControlName="nacimiento"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col class="ion-no-padding">
+              <ion-item lines="none">
+                <ion-button fill="clear" class="ion-no-margin;ion-no-padding">
+                  <ion-icon icon="calendar"></ion-icon>
+                </ion-button>
+
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </ng-template>
     <ion-button shape="round" color="primary" expand="block" padding type="submit">
       Confirmar
     </ion-button>

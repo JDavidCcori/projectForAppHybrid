@@ -22,6 +22,8 @@
       "es2018", 
       "dom"
     ],
+    "types": ["cordova"],
+
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
